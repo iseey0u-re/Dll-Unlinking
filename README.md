@@ -36,15 +36,22 @@ selected at compile time through `#if defined(_WIN64)` macros in
 ## Build
 
 Requires MSVC (Visual Studio). Open the folder in Visual Studio, or use
-`cl /std:c++17 /EHsc main.cpp unlink.cpp`. Pick x64 or x86 in the
+`cl /std:c++17 /EHsc main.cpp`. Pick x64 or x86 in the
 Developer Command Prompt - the `_WIN64` macros in `unlink.h` select the
 right offsets.
 
 If you use a different compiler, replace `__readgsqword` /
 `__readfsdword` with the equivalent intrinsic available in yours.
 
+The PEB and LDR structures are walked through raw offsets on purpose —
+no `winternl.h` types, no `PPEB` / `PLDR_DATA_TABLE_ENTRY`. This keeps
+the technique explicit: every field is read by the offset it actually
+lives at, not through a header that hides the layout.
+
 ## Disclaimer
 
 This is a demonstration of a known technique for learning purposes.
 It is not malware, and it is not a call to write any. Use it on your
 own machines and in your own processes.
+
+Sorry if your eyes bleed from this code.
