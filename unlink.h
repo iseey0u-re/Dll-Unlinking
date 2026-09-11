@@ -37,8 +37,7 @@
 #endif
 
 
-#include <iostream>
-#include <winternl.h>
+#include <iostream>
 
 void Test() {
 #if defined(_WIN64)
